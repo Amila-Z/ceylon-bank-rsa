@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceylon Bank - RSA Key Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2C5AA0 0%, #1e4080 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .logo {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .main-content {
+            padding: 25px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section-title {
+            color: #2C5AA0;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #2C5AA0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: border-color 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        select {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: pointer;
+            background: white;
+        }
+
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2C5AA0;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .textarea-small {
+            min-height: 60px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2C5AA0;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #1e4080;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(44, 90, 160, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.copy-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            margin-top: 5px;
+            background: #5CB85C;
+        }
+
+        button.copy-btn:hover {
+            background: #4CAF50;
+        }
+
+        .status-message {
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 13px;
+            display: none;
+            text-align: center;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .key-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .key-info-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .key-info-value {
+            color: #2C5AA0;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1200px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🏦</div>
+            <h1>Ceylon Bank RSA Key Management System</h1>
+            <p>Secure Encryption & Decryption for Banking Operations</p>
+        </div>
+
+        <div class="main-content">
+            <div class="grid-layout">
+                <!-- Key Generation Section -->
+                <div class="section">
+                    <h2 class="section-title">🔑 Key Generation</h2>
+                    
+                    <div class="form-group">
+                        <label>Select Key Size:</label>
+                        <select id="keySize">
+                            <option value="2048">2048-bit (Standard Security - ~112 bits) - Routine Operations</option>
+                            <option value="3072" selected>3072-bit (High Security - ~128 bits) - High-Value Transactions</option>
+                            <option value="4096">4096-bit (Maximum Security - ~152 bits) - Critical Infrastructure</option>
+                        </select>
+                    </div>
+
+                    <button onclick="generateKeys()">🔑 Generate New Key Pair</button>
+
+                    <div class="key-info" style="margin-top: 15px; display: none;" id="keyInfoDisplay">
+                        <span class="key-info-label">Security Level:</span>
+                        <span class="key-info-value" id="securityLevel">-</span>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Public Key (Share with others):</label>
+                        <textarea id="publicKey" class="textarea-small" readonly placeholder="Click 'Generate New Key Pair' to create keys..."></textarea>
+                        <button class="copy-btn" onclick="copyToClipboard('publicKey')">📋 Copy Public Key</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Private Key (Keep Confidential):</label>
+                        <textarea id="privateKey" class="textarea-small" readonly placeholder="Private key will appear here..."></textarea>
+                        <button class="copy-btn" onclick="copyToClipboard('privateKey')">📋 Copy Private Key</button>
+                    </div>
+                    
+                    <div id="keyStatus" class="status-message"></div>
+                </div>
+
+                <!-- Encryption Section -->
+                <div class="section">
+                    <h2 class="section-title">🔒 Encryption</h2>
+                    
+                    <div class="form-group">
+                        <label>Message to Encrypt:</label>
+                        <textarea id="plaintext" placeholder="Enter confidential message here..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Public Key (For Encryption):</label>
+                        <textarea id="encryptPublicKey" class="textarea-small" placeholder="Paste public key here..."></textarea>
+                    </div>
+                    
+                    <button onclick="encryptMessage()">🔒 Encrypt Message</button>
+                    
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Encrypted Message:</label>
+                        <textarea id="ciphertext" class="textarea-small" readonly placeholder="Encrypted message will appear here..."></textarea>
+                        <button class="copy-btn" onclick="copyToClipboard('ciphertext')">📋 Copy Encrypted Message</button>
+                    </div>
+                    
+                    <div id="encryptStatus" class="status-message"></div>
+                </div>
+
+                <!-- Decryption Section (spans 2 columns) -->
+                <div class="section" style="grid-column: 1 / -1;">
+                    <h2 class="section-title">🔓 Decryption</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label>Encrypted Message:</label>
+                            <textarea id="decryptCiphertext" placeholder="Paste encrypted message here..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Private Key (For Decryption):</label>
+                            <textarea id="decryptPrivateKey" class="textarea-small" placeholder="Paste private key here..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Decrypted Message:</label>
+                            <textarea id="decryptedText" readonly placeholder="Original message will appear here..."></textarea>
+                        </div>
+                    </div>
+
+                    <button onclick="decryptMessage()" style="max-width: 300px; margin: 10px auto 0;">🔓 Decrypt Message</button>
+                    
+                    <div id="decryptStatus" class="status-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+    <script>
+        function getSelectedKeySize() {
+            return document.getElementById('keySize').value;
+        }
+
+        function updateSecurityDisplay(keySize) {
+            const securityInfo = {
+                '2048': '112-bit Security (NIST Approved through 2030)',
+                '3072': '128-bit Security (NIST Approved beyond 2030)',
+                '4096': '152-bit Security (Maximum Protection)'
+            };
+            
+            document.getElementById('securityLevel').textContent = securityInfo[keySize];
+            document.getElementById('keyInfoDisplay').style.display = 'flex';
+        }
+
+        function generateKeys() {
+            const keySize = getSelectedKeySize();
+            const statusDiv = document.getElementById('keyStatus');
+            
+            statusDiv.textContent = `Generating ${keySize}-bit RSA keys...`;
+            statusDiv.className = 'status-message';
+            statusDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                try {
+                    const crypt = new JSEncrypt({default_key_size: keySize});
+                    
+                    const publicKey = crypt.getPublicKey();
+                    const privateKey = crypt.getPrivateKey();
+                    
+                    document.getElementById('publicKey').value = publicKey;
+                    document.getElementById('privateKey').value = privateKey;
+                    document.getElementById('encryptPublicKey').value = publicKey;
+                    document.getElementById('decryptPrivateKey').value = privateKey;
+                    
+                    updateSecurityDisplay(keySize);
+                    
+                    statusDiv.textContent = `✓ Successfully generated ${keySize}-bit RSA key pair!`;
+                    statusDiv.className = 'status-message success';
+                } catch (error) {
+                    statusDiv.textContent = `✗ Error: ${error.message}`;
+                    statusDiv.className = 'status-message error';
+                }
+            }, 100);
+        }
+
+        function encryptMessage() {
+            const plaintext = document.getElementById('plaintext').value;
+            const publicKey = document.getElementById('encryptPublicKey').value;
+            const statusDiv = document.getElementById('encryptStatus');
+            
+            if (!plaintext) {
+                statusDiv.textContent = '✗ Please enter a message to encrypt.';
+                statusDiv.className = 'status-message error';
+                return;
+            }
+            
+            if (!publicKey) {
+                statusDiv.textContent = '✗ Please provide a public key.';
+                statusDiv.className = 'status-message error';
+                return;
+            }
+            
+            try {
+                const encrypt = new JSEncrypt();
+                encrypt.setPublicKey(publicKey);
+                
+                const encrypted = encrypt.encrypt(plaintext);
+                
+                if (encrypted) {
+                    document.getElementById('ciphertext').value = encrypted;
+                    document.getElementById('decryptCiphertext').value = encrypted;
+                    
+                    statusDiv.textContent = '✓ Message encrypted successfully!';
+                    statusDiv.className = 'status-message success';
+                } else {
+                    throw new Error('Encryption failed');
+                }
+            } catch (error) {
+                statusDiv.textContent = `✗ Error: ${error.message}`;
+                statusDiv.className = 'status-message error';
+            }
+        }
+
+        function decryptMessage() {
+            const ciphertext = document.getElementById('decryptCiphertext').value;
+            const privateKey = document.getElementById('decryptPrivateKey').value;
+            const statusDiv = document.getElementById('decryptStatus');
+            
+            if (!ciphertext) {
+                statusDiv.textContent = '✗ Please enter an encrypted message.';
+                statusDiv.className = 'status-message error';
+                return;
+            }
+            
+            if (!privateKey) {
+                statusDiv.textContent = '✗ Please provide a private key.';
+                statusDiv.className = 'status-message error';
+                return;
+            }
+            
+            try {
+                const decrypt = new JSEncrypt();
+                decrypt.setPrivateKey(privateKey);
+                
+                const decrypted = decrypt.decrypt(ciphertext);
+                
+                if (decrypted) {
+                    document.getElementById('decryptedText').value = decrypted;
+                    
+                    statusDiv.textContent = '✓ Message decrypted successfully!';
+                    statusDiv.className = 'status-message success';
+                } else {
+                    throw new Error('Decryption failed - incorrect private key or corrupted message');
+                }
+            } catch (error) {
+                statusDiv.textContent = `✗ Error: ${error.message}`;
+                statusDiv.className = 'status-message error';
+            }
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            element.select();
+            element.setSelectionRange(0, 99999);
+            
+            navigator.clipboard.writeText(element.value).then(() => {
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.style.background = '#28a745';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // Auto-generate keys on page load
+        window.addEventListener('load', () => {
+            generateKeys();
+        });
+    </script>
+</body>
+</html>
