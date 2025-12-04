@@ -183,3 +183,5 @@ python3 ceylon_bank_rsa.py
 - Verify the correct key is being used (public for encryption, private for decryption)
 - Ensure the key format is correct (PEM format with header/footer)
 - Check that the encrypted message is complete (no truncation)
+
+<img width="1106" height="880" alt="Cylon_Bank_RSA" src="https://github.com/user-attachments/assets/984385ca-a513-4be8-814e-b29fe87ad59d" />
