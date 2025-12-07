@@ -1,9 +1,9 @@
 # Ceylon Bank RSA Key Management System
 
-## 📌 Project Overview
+## Project Overview
 Enterprise-grade implementation of RSA encryption and decryption for secure banking communications, integrated with Public Key Infrastructure (PKI) for scalable key management. Developed as part of an academic assignment on asymmetric cryptography and enterprise security architecture.
 
-## 🔧 Technologies Used
+## Technologies Used
 - **Python 3.x** with pycryptodome library
 - **JavaScript** with JSEncrypt library
 - **HTML/CSS** for web interface
