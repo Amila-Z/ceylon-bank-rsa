@@ -1,187 +1,169 @@
-# ceylon-bank-rsa
-RSA Encryption Implementation for Ceylon Bank - Academic Project with Python and Web Interface
-### 1. Ceylon_Bank_RSA_Interface.html
-Professional web-based user interface featuring:
-- **Key Size Selection:** Choose between 2048, 3072, or 4096-bit keys
-- **Security Level Indicators:** Visual badges showing security strength
-- **Key Generation:** Automatic generation with selected key size
-- **Encryption Module:** Encrypt messages using public keys
-- **Decryption Module:** Decrypt messages using private keys
-- **Copy Functionality:** Easy copying of keys and encrypted messages
-- **Professional Design:** Blue color scheme matching Ceylon Bank branding
-- **Responsive Layout:** Works on desktop, tablet, and mobile devices
+# Ceylon Bank RSA Key Management System
 
-### 2. ceylon_bank_rsa.py
-Python implementation with:
-- RSA key generation (2048, 3072, 4096 bits)
-- Message encryption using PKCS#1 OAEP padding
-- Message decryption with security verification
-- Comprehensive testing across all key sizes
-- Performance metrics and security information
-- NIST compliance indicators
+## 📌 Project Overview
+Enterprise-grade implementation of RSA encryption and decryption for secure banking communications, integrated with Public Key Infrastructure (PKI) for scalable key management. Developed as part of an academic assignment on asymmetric cryptography and enterprise security architecture.
 
-## Installation & Setup
+## 🔧 Technologies Used
+- **Python 3.x** with pycryptodome library
+- **JavaScript** with JSEncrypt library
+- **HTML/CSS** for web interface
+- **PKI Integration** with SSL/TLS and IPsec protocols
 
-### Requirements
+## Files Included
+
+### 1. ceylon_bank_rsa.py
+Python implementation featuring:
+- RSA key generation (2048, 3072, 4096-bit keys)
+- PKCS#1 OAEP encryption
+- PKCS#1 OAEP decryption
+- Performance testing across all key sizes
+- NIST-compliant security levels
+
+### 2. Ceylon_Bank_RSA_Interface.html
+Web-based interface featuring:
+- Interactive key generation with security level indicators
+- Real-time encryption/decryption
+- Support for pasting previously generated keys
+- Professional Ceylon Bank branding
+- Copy functionality for keys and encrypted messages
+- No server required - runs completely client-side
+
+## How to Use
+
+### Python Implementation
 ```bash
-# Python 3.x (Python 3.8+ recommended)
 # Install required library
 pip install pycryptodome
+
+# Run the program
+python ceylon_bank_rsa.py
 ```
 
-### Running the Python Implementation
-```bash
-python3 ceylon_bank_rsa.py
-```
+**Output:** Tests encryption/decryption with all three key sizes (2048, 3072, 4096 bits) and displays performance metrics.
 
-This will:
-1. Generate RSA key pairs for all three key sizes
-2. Encrypt test messages representing Ceylon Bank transactions
-3. Decrypt and verify the messages
-4. Display security information and performance metrics
+### Web Interface
+Simply open `Ceylon_Bank_RSA_Interface.html` in any modern web browser.
 
-### Using the Web Interface
+**Features:**
+- Generate RSA key pairs with one click
+- Encrypt messages using any public key
+- Decrypt messages using corresponding private keys
+- Paste previously generated keys for reuse
+- Copy keys and encrypted messages with one click
 
-**Option 1: Direct Browser Access**
-1. Double-click `Ceylon_Bank_RSA_Interface.html`
-2. It will open in your default web browser
-3. No server required - runs completely in the browser
+## Enterprise Deployment Architecture
 
-**Option 2: Local Web Server (Recommended for testing)**
-```bash
-# Python 3
-python3 -m http.server 8000
+This implementation is designed to integrate with enterprise security infrastructure:
 
-# Then open browser to:
-# http://localhost:8000/Ceylon_Bank_RSA_Interface.html
-```
+### Public Key Infrastructure (PKI)
+- **Certificate Authority (CA):** Centralized trust management for public keys
+- **Two-tier structure:** Offline Root CA (4096-bit) and operational Intermediate CA (3072-bit)
+- **Certificate lifecycle:** Automated issuance, validation, and revocation
 
-## How to Use the Web Interface
+### Secure Communication Protocols
+- **SSL/TLS VPN:** Web-based employee access with RSA handshake and AES-256 data encryption
+- **IPsec VPN:** Site-to-site tunnels between branches with IKEv2 and RSA authentication
 
-### Step 1: Select Key Size
-Choose the appropriate key size based on your security needs:
-- **2048-bit:** Standard security for routine operations (NIST approved through 2030)
-- **3072-bit:** High security for sensitive transactions (recommended for long-term protection)
-- **4096-bit:** Maximum security for critical infrastructure
+### Multi-Factor Authentication
+- **Something you have:** RSA private key in certificate
+- **Something you know:** Password authentication
+- **Something you are:** Biometric verification for high-value transactions
 
-### Step 2: Generate Keys
-Click "Generate New Key Pair" to create RSA keys with your selected size. The system automatically:
-- Generates cryptographically secure keys
-- Displays both public and private keys
-- Pre-fills keys into encryption/decryption fields
+## Security Features
+- NIST-compliant key sizes (SP 800-57)
+- PKCS#1 OAEP padding for semantic security
+- Cryptographically secure random number generation
+- Defense-in-depth security architecture
+- Automated certificate validation and revocation checking
 
-### Step 3: Encrypt Messages
-1. Enter your confidential message in the "Message to Encrypt" field
-2. Ensure the public key is in the "Public Key for Encryption" field
-3. Click "Encrypt Message"
-4. Copy the encrypted message using the copy button
+## Key Size Recommendations
 
-### Step 4: Decrypt Messages
-1. Paste the encrypted message into the "Encrypted Message" field
-2. Ensure the private key is in the "Private Key for Decryption" field
-3. Click "Decrypt Message"
-4. View the original decrypted message
-
-### Step 5: Share Securely
-- **Public Key:** Can be freely shared with anyone who needs to send you encrypted messages
-- **Private Key:** Must be kept confidential and secure at all times
-- **Encrypted Messages:** Can be transmitted over insecure channels
-
-## Security Best Practices for Ceylon Bank Employees
-
-### Key Management
-1. **Never share private keys** - Only the holder of the private key can decrypt messages
-2. **Use secure storage** - Store private keys in password-protected files or HSMs
-3. **Unique keys per purpose** - Generate different key pairs for different purposes
-4. **Regular key rotation** - Replace keys periodically (annually recommended)
-
-### Key Size Selection Guidelines
-- **Routine Communications:** 2048-bit keys (balance of security and performance)
-- **Financial Transactions > $10,000:** 3072-bit keys (enhanced security)
-- **Executive Communications:** 4096-bit keys (maximum security)
-- **Long-term Data Storage:** 3072-bit or 4096-bit keys (future-proof)
-
-### Operational Security
-1. Always verify the authenticity of public keys before encrypting sensitive data
-2. Use secure channels (in-person, phone verification) to exchange public keys
-3. Keep encryption software and libraries updated
-4. Report any suspected key compromise immediately to IT Security
-
-## Technical Details
-
-### RSA Key Sizes and Security
 | Key Size | Security Bits | NIST Approval | Use Case |
 |----------|--------------|---------------|----------|
 | 2048-bit | ~112 bits | Through 2030 | Routine operations |
 | 3072-bit | ~128 bits | Beyond 2030 | High-value transactions |
 | 4096-bit | ~152 bits | Maximum | Critical infrastructure |
 
-### Padding Scheme
-The implementation uses **PKCS#1 OAEP** (Optimal Asymmetric Encryption Padding):
-- Provides semantic security
-- Protects against chosen-ciphertext attacks
-- Industry-standard padding for RSA encryption
-- Recommended by NIST and RSA Security
+## Performance Metrics
 
-### Performance Characteristics
-Based on testing:
-- **2048-bit:** Generation ~0.2s, Encryption ~0.003s, Decryption ~0.035s
-- **3072-bit:** Generation ~1.4s, Encryption ~0.002s, Decryption ~0.058s
-- **4096-bit:** Generation ~6.9s, Encryption ~0.002s, Decryption ~0.089s
+Based on testing (average):
+- **2048-bit:** Key generation ~0.2s, Encryption ~0.003s, Decryption ~0.035s
+- **3072-bit:** Key generation ~1.4s, Encryption ~0.002s, Decryption ~0.058s
+- **4096-bit:** Key generation ~6.9s, Encryption ~0.002s, Decryption ~0.089s
 
-## Threat Mitigation
+## Academic Context
+This project demonstrates understanding of:
+- Asymmetric cryptography principles (RSA algorithm)
+- Enterprise Public Key Infrastructure (PKI)
+- Secure communication protocols (SSL/TLS, IPsec)
+- Multi-factor authentication mechanisms
+- NIST cryptographic standards and best practices
+- Real-world banking security requirements
 
-### Quantum Computing Threats
-- **Current Status:** No immediate threat (cryptographically relevant quantum computers not yet available)
-- **Ceylon Bank Action:** Monitor NIST post-quantum cryptography standards
-- **Timeline:** Plan migration to post-quantum algorithms by 2030-2035
+## System Architecture
 
-### Implementation Vulnerabilities
-- **Mitigation:** Using well-tested pycryptodome library
-- **Padding:** PKCS#1 OAEP prevents common attacks
-- **RNG:** Cryptographically secure random number generation
-
-### Key Management
-- **Recommendation:** Use Hardware Security Modules (HSMs) for key storage
-- **Policy:** Implement strict key lifecycle management
-- **Audit:** Regular security audits of cryptographic systems
-
-## Compliance & Standards
-
-### NIST SP 800-57 Compliance
-- All key sizes comply with NIST Special Publication 800-57 Part 1 Revision 5
-- Recommendations for key management followed
-- Security strength levels documented and validated
-
-### Banking Security Standards
-- Suitable for PCI DSS compliance
-- Meets ISO 27001 requirements for cryptographic controls
-- Compatible with Basel III operational risk management framework
-
-## Troubleshooting
-
-### Python Script Issues
-**Error: "ModuleNotFoundError: No module named 'Crypto'"**
-```bash
-pip install pycryptodome --break-system-packages
+```
+                Certificate Authority (CA)
+                         |
+                [Signs & validates keys]
+                         |
+        ┌────────────────┴────────────────┐
+        ↓                                 ↓
+   Employee A                        Employee B
+   [Certificate]                    [Certificate]
+        ↓                                 ↓
+   SSL/TLS VPN Tunnel ══════════════════→
+        ↓                                 ↓
+   RSA Encryption  ═════════════════════→
 ```
 
-**Error: "Permission denied"**
-```bash
-# Linux/Mac
-chmod +x ceylon_bank_rsa.py
-python3 ceylon_bank_rsa.py
-```
+## Security Best Practices
 
-### Web Interface Issues
-**Keys not generating:**
-- Ensure JavaScript is enabled in your browser
-- Try refreshing the page
-- Check browser console for errors (F12)
+### For Development:
+1. Always use cryptographically secure random number generators
+2. Implement proper padding (PKCS#1 OAEP) to prevent attacks
+3. Use NIST-recommended key sizes (minimum 2048-bit)
+4. Validate all inputs and handle errors securely
+5. Keep cryptographic libraries updated
 
-**Encryption/Decryption fails:**
-- Verify the correct key is being used (public for encryption, private for decryption)
-- Ensure the key format is correct (PEM format with header/footer)
-- Check that the encrypted message is complete (no truncation)
+### For Deployment:
+1. Store private keys in Hardware Security Modules (HSMs)
+2. Implement certificate-based authentication
+3. Use Certificate Revocation Lists (CRL) or OCSP
+4. Enable audit logging for all cryptographic operations
+5. Regular security assessments and penetration testing
+
+## References
+
+1. NIST Special Publication 800-57 Part 1 Revision 5: Recommendation for Key Management
+2. Rivest, R., Shamir, A., & Adleman, L. (1978). A Method for Obtaining Digital Signatures and Public-Key Cryptosystems
+3. Bellare, M. and Rogaway, P. (1994). Optimal Asymmetric Encryption Padding
+4. Cooper, D. et al. (2008). Internet X.509 Public Key Infrastructure Certificate and CRL Profile (RFC 5280)
+5. Frankel, S. and Krishnan, S. (2011). IP Security (IPsec) and IKE Document Roadmap (RFC 6071)
+
+## Key Features
+
+- **Complete RSA Implementation** - Key generation, encryption, decryption
+- **Professional Web Interface** - User-friendly GUI for all operations
+- **Multiple Key Sizes** - 2048, 3072, 4096-bit support
+- **NIST Compliant** - Follows SP 800-57 recommendations
+- **PKI Ready** - Designed for enterprise PKI integration
+- **Secure by Default** - PKCS#1 OAEP padding, secure RNG
+- **Well Documented** - Comprehensive code comments and README
+
+## License
+This is an academic project developed for educational purposes.
+
+## Author
+Amila Niroshana Thilakarathne (Amila_Z)
+Academic Project - Cryptography and Network Security Course  
+November 2025
+
+## Contact
+For questions or feedback about this implementation, please open an issue on this repository.
+
+---
+
+**Note:** This implementation is designed for educational purposes to demonstrate RSA encryption concepts and enterprise security architecture. For production banking systems, additional security measures, compliance certifications, and professional security audits would be required.
 
 <img width="1106" height="880" alt="Cylon_Bank_RSA" src="https://github.com/user-attachments/assets/984385ca-a513-4be8-814e-b29fe87ad59d" />
